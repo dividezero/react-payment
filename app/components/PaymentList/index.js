@@ -12,7 +12,6 @@ import {
 
 
 const PaymentList = (props) => {
-  console.log(props)
   const userItems = props.payments.map((payment, key) =>
     <TableRow key={key}>
       <TableRowColumn>{payment.merchant_name}</TableRowColumn>

@@ -14,12 +14,9 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import UserListPage from "../UserListPage/index";
-import LoginPage from "../../components/LoginPage"
 import Dashboard from "../Dashboard/index";
 
 export default function App() {
@@ -27,8 +24,7 @@ export default function App() {
     <MuiThemeProvider>
       <div>
         <Switch>
-          <Route exact path="/" component={LoginPage}/>
-          <Route exact path="/dashboard" component={Dashboard}/>
+          <Route exact path="/" component={Dashboard}/>
           <Route component={NotFoundPage}/>
         </Switch>
       </div>

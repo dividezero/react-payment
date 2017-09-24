@@ -8,8 +8,6 @@ import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bu
 
 
 const AccountList = (props) => {
-  console.log(props)
-
   const accountItems = props.accounts.map((account, key) =>
     <ListItem
       primaryText={account.name}

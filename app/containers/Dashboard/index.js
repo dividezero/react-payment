@@ -21,179 +21,14 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {
+  authenticateUser, getAccount, getAccountPayments, getAllUsers, getUser, getUserAccounts, postCreateUser,
+  postTopupAccount
+} from '../../api';
+import {LoginPage} from "../../components/LoginPage/index";
+import {loggedUser, activeUser, users, demo_payments, demo_accounts} from "../../tests/sampleData";
 
-const loggedUser = {
-  "id": "user_OCHy0G45SLmKcRZc",
-  "created_at": 1452249298,
-  "initials": "JS",
-  "email": "2@test.com",
-  "first_name": "Josh",
-  "last_name": "Sheilder",
-  "admin": true,
-  "account": {
-    "id": "acc_WcuWD6gDzNsop4lE",
-    "created_at": "2016-01-08 10:34:58 +0000",
-    "livemode": true,
-    "name": "1",
-    "balance": "150000.0",
-    "card_number": "1111222233334444",
-    "status": "active"
-  }
-};
-const activeUser = {
-  "id": "user_OCHy0G45SLmKcRZc",
-  "created_at": 1452249298,
-  "initials": "JS",
-  "email": "2@test.com",
-  "first_name": "Josh",
-  "last_name": "Sheilder",
-  "admin": true,
-  "account": {
-    "id": "acc_WcuWD6gDzNsop4lE",
-    "created_at": "2016-01-08 10:34:58 +0000",
-    "livemode": true,
-    "name": "1",
-    "balance": "150000.0",
-    "card_number": "1111222233334444",
-    "status": "active"
-  }
-};
-const users = [{
-  "id": "user_OCHy0G45SLmKcRZc",
-  "created_at": 1452249298,
-  "initials": "JS",
-  "email": "2@test.com",
-  "first_name": "Josh",
-  "last_name": "Sheilder",
-  "admin": true,
-  "account": {
-    "id": "acc_WcuWD6gDzNsop4lE",
-    "created_at": "2016-01-08 10:34:58 +0000",
-    "livemode": true,
-    "name": "1",
-    "balance": "150000.0",
-    "card_number": "1111222233334444",
-    "status": "active"
-  }
-}, {
-  "id": "user_OCHy0G45SLmKcRZc",
-  "created_at": 1452249298,
-  "initials": "JD",
-  "email": "3@test.com",
-  "first_name": "James",
-  "last_name": "Dean",
-  "admin": true,
-  "account": {
-    "id": "acc_WcuWD6gDzNsop4lE",
-    "created_at": "2016-01-08 10:34:58 +0000",
-    "livemode": true,
-    "name": "1",
-    "balance": "150000.0",
-    "card_number": "1111222233334444",
-    "status": "active"
-  }
-}, {
-  "id": "user_OCHy0G45SLmKcRZc",
-  "created_at": 1452249298,
-  "initials": "MB",
-  "email": "2@test.com",
-  "first_name": "Mary",
-  "last_name": "Bennet",
-  "admin": true,
-  "account": {
-    "id": "acc_WcuWD6gDzNsop4lE",
-    "created_at": "2016-01-08 10:34:58 +0000",
-    "livemode": true,
-    "name": "1",
-    "balance": "150000.0",
-    "card_number": "1111222233334444",
-    "status": "active"
-  }
-}];
-
-const demo_accounts = [
-  {
-    "id": "acc_tmnmdPRWjyDSk8LI",
-    "created_at": 1452160703,
-    "livemode": true,
-    "name": "test_account",
-    "balance": "110.0",
-    "card_number": "1234123412341234",
-    "status": "active"
-  },
-  {
-    "id": "acc_tmnmdPRWjyDSk8LI",
-    "created_at": 1452160703,
-    "livemode": true,
-    "name": "test_account_2",
-    "balance": "402.0",
-    "card_number": "1234123412341234",
-    "status": "active"
-  }
-];
-
-const demo_payments = [{
-  "id": "pay_jDkH4tWV5BA2uMHM",
-  "created_at": 1453970215,
-  "livemode": true,
-  "demo": null,
-  "amount": "200.0",
-  "currency": "hkd",
-  "description": "test_1",
-  "merchant_name": "123",
-  "category": "shopping",
-  "refunded": false,
-  "account_balance": "2361.0",
-  "request_longitude": "114.1667",
-  "request_latitude": "22.25",
-  "request_address": "Hong Kong",
-  "network_type": "wifi",
-  "network_ip": "127.1.0.0",
-  "network_operator": "Smartone",
-  "wireless_access_point": "MyWifi",
-  "status": "succeeded"
-}, {
-  "id": "pay_jDkH4tWV5BA2uMHM",
-  "created_at": 1453970215,
-  "livemode": true,
-  "demo": null,
-  "amount": "200.0",
-  "currency": "hkd",
-  "description": "test_1",
-  "merchant_name": "123",
-  "category": "shopping",
-  "refunded": false,
-  "account_balance": "2361.0",
-  "request_longitude": "114.1667",
-  "request_latitude": "22.25",
-  "request_address": "Hong Kong",
-  "network_type": "wifi",
-  "network_ip": "127.1.0.0",
-  "network_operator": "Smartone",
-  "wireless_access_point": "MyWifi",
-  "status": "succeeded"
-}, {
-  "id": "pay_jDkH4tWV5BA2uMHM",
-  "created_at": 1453970215,
-  "livemode": true,
-  "demo": null,
-  "amount": "200.0",
-  "currency": "hkd",
-  "description": "test_1",
-  "merchant_name": "123",
-  "category": "shopping",
-  "refunded": false,
-  "account_balance": "2361.0",
-  "request_longitude": "114.1667",
-  "request_latitude": "22.25",
-  "request_address": "Hong Kong",
-  "network_type": "wifi",
-  "network_ip": "127.1.0.0",
-  "network_operator": "Smartone",
-  "wireless_access_point": "MyWifi",
-  "status": "succeeded"
-}];
 
 const Logged = (props) => (
   <IconMenu
@@ -204,8 +39,8 @@ const Logged = (props) => (
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
-    <MenuItem primaryText="Refresh" />
-    <MenuItem primaryText={<Link to={"/"}>Sign out</Link>}/>
+    <MenuItem primaryText="Refresh" onClick={props.doRefresh}/>
+    <MenuItem primaryText="Sign out" onClick={props.doLogOut}/>
   </IconMenu>
 );
 
@@ -221,54 +56,167 @@ export default class Dashboard extends React.PureComponent { // eslint-disable-l
       activeAccount: demo_accounts[0],
       payments: demo_payments
     }
+    // this.doRefresh();
   }
+
+  //todo should figure out what to refresh instead of the whole thing
+  doRefresh = () => {
+    this.populateUsers();
+    this.setState({
+      activeUser: getUser(this.state.activeUser.id),
+      activeAccount: getAccount(this.state.activeUser.id, this.state.activeAccount.id),
+    });
+  };
+
+  populateUsers = (resetActive = true) => {
+    this.resetUsers();
+    getAllUsers((resUsers) => {
+      console.log(resUsers)
+      if(resUsers){
+        this.setState({
+          users: resUsers,
+          activeUser: resUsers[0]
+        });
+        if (resetActive) {
+          this.setState({
+            activeUser: resUsers[0]
+          });
+        }
+        this.populateAccounts(resetActive);
+      }
+    })
+  };
+
+  populateAccounts = (resetActive = true) => {
+    getUserAccounts(this.state.activeUser.id, (accs) => {
+      if (accs) {
+        this.setState({
+          accounts: accs,
+        });
+        if (resetActive) {
+          this.setState({
+            accounts: accs,
+            activeAccount: accs[0]
+          });
+        }
+      }
+      this.populatePayments();
+    });
+  };
+
+  resetUsers = () =>{
+    this.setState({
+      users: [],
+    });
+    this.resetAccounts();
+  };
+
+  resetAccounts = () =>{
+    this.setState({
+      accounts: [],
+    });
+    this.resetPayments();
+  };
+
+  resetPayments = () =>{
+    this.setState({
+      payments: []
+    });
+  };
+
+  populatePayments = () => {
+    getAccountPayments(this.state.activeAccount.id, (resPayments) => {
+      this.setState({
+        payments: resPayments
+      });
+    });
+  };
+
+  doLogin = (email, pass) => {
+    this.setState({
+      loggedUser: authenticateUser(email, pass)
+    });
+  };
 
   setActiveAccount = (account) => {
     this.setState({
       activeAccount: account
     });
-    console.log(this.state)
+    this.populatePayments(true);
   };
 
   setActiveUser = (user) => {
     this.setState({
       activeUser: user
     });
-    console.log(this.state)
+    this.populateAccounts(true);
+  };
+
+  doAddUser = (email, password, telephone_number, first_name, last_name) => {
+    postCreateUser(email, password, telephone_number, first_name, last_name, (data) => {
+      this.populateUsers(false);
+    })
   };
 
   makePayment = (desc, amt, ccy) => {
-    //todo
+    //todo make payment and refresh
     console.log(this.state.activeAccount.id, desc, amt, ccy);
   };
 
-  topupAccount = (amount) =>{
-    console.log("topup acc", amount);
-  }
+  topupAccount = (amount) => {
+    postTopupAccount(this.state.activeAccount, amount, (data) => {
+      console.log("acc topup:", data);
+    })
+  };
+
+  doLogOut = () => {
+    this.setState({
+      loggedUser: null,
+      activeUser: null,
+      users: null,
+      accounts: null,
+      activeAccount: null,
+      payments: null
+    });
+  };
 
   render() {
     return (
       <div>
-        <AppBar
-          title="Payment App"
-          iconElementLeft={<div></div>}
-          iconElementRight={<Logged />}
-        />
-        <div style={styles.container}>
-          <div style={styles.leftColumn}>
-            <UserDetails user={this.state.activeUser} users={this.state.users} accounts={this.state.accounts}
-                         activeAccount={this.state.activeAccount}
-                         setActiveUser={this.setActiveUser.bind(this)} dispatch={() => {
-            }}/>
-            <AccountDetails user={loggedUser} accounts={this.state.accounts} activeAccount={this.state.activeAccount}
-                            setActiveAccount={this.setActiveAccount.bind(this)} topupAccount={this.topupAccount.bind(this)} dispatch={() => {
-            }}/>
-          </div>
-          <div style={styles.rightColumn}>
-            <PaymentDetails payments={this.state.payments} makePayment={this.makePayment.bind(this)} dispatch={() => {
-            }}/>
-          </div>
-        </div>
+        {
+          this.state.loggedUser ?
+            <div>
+              <AppBar
+                title="Payment App"
+                iconElementLeft={<div></div>}
+                iconElementRight={<Logged
+                  doRefresh={this.doRefresh.bind(this)}
+                  doLogOut={this.doLogOut.bind(this)}/>}
+              />
+              <div style={styles.container}>
+                <div style={styles.leftColumn}>
+                  <div style={{
+                    paddingBottom: '10px'
+                  }}>
+                    <UserDetails user={this.state.activeUser} users={this.state.users} accounts={this.state.accounts}
+                                 activeAccount={this.state.activeAccount}
+                                 setActiveUser={this.setActiveUser.bind(this)}
+                                 doAddUser={this.doAddUser.bind(this)} dispatch={() => {
+                    }}/>
+                  </div>
+                  <AccountDetails user={loggedUser} accounts={this.state.accounts}
+                                  activeAccount={this.state.activeAccount}
+                                  setActiveAccount={this.setActiveAccount.bind(this)}
+                                  topupAccount={this.topupAccount.bind(this)} dispatch={() => {
+                  }}/>
+                </div>
+                <div style={styles.rightColumn}>
+                  <PaymentDetails payments={this.state.payments} makePayment={this.makePayment.bind(this)}
+                                  dispatch={() => {
+                                  }}/>
+                </div>
+              </div>
+            </div> : <LoginPage doLogin={this.doLogin.bind(this)}/>}
       </div>
     );
   }

@@ -27,7 +27,6 @@ export class AccountDetails extends React.Component { // eslint-disable-line rea
   }
 
   toggleExpansion() {
-    console.log(this.state)
     this.setState({
       expanded: !this.state.expanded
     })
@@ -43,7 +42,7 @@ export class AccountDetails extends React.Component { // eslint-disable-line rea
       <div>
 
         <Card
-          // expanded={this.state.expanded} onExpandChange={this.toggleExpansion}
+          expanded={this.state.expanded} onExpandChange={this.toggleExpansion.bind(this)}
         >
           {/*<CardTitle title="Active User" subtitle="Manage current user"/>*/}
           <CardHeader
@@ -52,17 +51,18 @@ export class AccountDetails extends React.Component { // eslint-disable-line rea
             actAsExpander={true}
             showExpandableButton={true}
           />
+          <CardText expandable={true}>
+            {/*<UserList users={this.props.users}/>*/}
+            <AccountList accounts={this.props.accounts} setActiveAccount={this.setAccountAndClose.bind(this)}/>
+
+          </CardText>
           <CardText>
             <div>Balance: {this.props.activeAccount.balance}</div>
           </CardText>
           <CardActions>
             <TopupAccountDialog topupAccount={this.props.topupAccount}/>
           </CardActions>
-          <CardText expandable={true}>
-            {/*<UserList users={this.props.users}/>*/}
-            <AccountList accounts={this.props.accounts} setActiveAccount={this.setAccountAndClose.bind(this)}/>
 
-          </CardText>
         </Card>
       </div>
     );

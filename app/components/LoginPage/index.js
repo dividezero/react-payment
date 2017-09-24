@@ -12,13 +12,13 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-
+import {authenticateUser} from '../../api';
 
 
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
     open: false,
-    username: "",
+    email: "",
     password: "",
   };
 
@@ -31,23 +31,22 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
   };
 
   handleSubmit = () => {
-    console.log(this.state.val_desc, this.state.val_amt, this.state.val_ccy);
     this.props.makePayment(this.state.val_desc, this.state.val_amt, this.state.val_ccy);
 
     this.setState({open: false});
   };
 
-  handleChangeUsername = (event) => {
-    this.setState({username: event.target.value});
+  handleChangeEmail = (event) => {
+    this.setState({email: event.target.value});
   };
   handleChangePassword = (event) => {
     this.setState({password: event.target.value});
   };
 
-  login = () =>{
-    console.log("attempt login", this.state.username, this.state.password)
+  login = () => {
+    console.log("attempt login", this.state.email, this.state.password);
+    this.props.doLogin(this.state.email, this.state.password);
 
-    
   };
 
   render() {
@@ -56,11 +55,11 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
         <div style={styles.container}>
           <div style={styles.card}>
             <Card>
-              <CardTitle title="Payment Dashboard" subtitle="Please enter your username and password" />
+              <CardTitle title="Payment Dashboard" subtitle="Please enter your username and password"/>
               <CardText>
                 <TextField
-                  floatingLabelText="Username"
-                  onChange={this.handleChangeUsername}
+                  floatingLabelText="Email"
+                  onChange={this.handleChangeEmail}
                 /><br/>
                 <TextField
                   floatingLabelText="Password"
@@ -69,7 +68,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
                 />
               </CardText>
               <CardActions>
-                <FlatButton label="Login" onClick={this.login}/>
+                <FlatButton label="Login" primary={true} onClick={this.login}/>
               </CardActions>
             </Card>
           </div>
@@ -84,9 +83,9 @@ const styles = {
     display: "flex",
     justifyContent: "center"
   },
-  card:{
+  card: {
     "display": "flex",
-    padding:"20px",
+    padding: "20px",
     width: "350px"
   }
 };

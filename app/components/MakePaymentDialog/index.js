@@ -32,7 +32,6 @@ export class MakePaymentDialog extends React.Component { // eslint-disable-line 
   handleSubmit = () => {
     // if(typeof index === 'number'){
     // }
-    console.log(this.state.val_desc, this.state.val_amt, this.state.val_ccy);
     this.props.makePayment(this.state.val_desc, this.state.val_amt, this.state.val_ccy);
 
     this.setState({open: false});
@@ -61,7 +60,7 @@ export class MakePaymentDialog extends React.Component { // eslint-disable-line 
 
     return (
       <div>
-        <FlatButton label="Make Payment" onClick={this.handleOpen}/>
+        <FlatButton label="Make Payment" onClick={this.handleOpen} primary={true}/>
         <Dialog
           title="Make Payment"
           actions={actions}
@@ -69,7 +68,7 @@ export class MakePaymentDialog extends React.Component { // eslint-disable-line 
           open={this.state.open}
           onRequestClose={this.handleClose}
           contentStyle={{
-            width: "300px"
+            width: "320px"
           }}
         >
           <TextField
@@ -80,6 +79,7 @@ export class MakePaymentDialog extends React.Component { // eslint-disable-line 
           <TextField
             hintText="Amount"
             floatingLabelText="Amount"
+            type={"number"}
             onChange={this.handleChangeAmt}
           />
         </Dialog>

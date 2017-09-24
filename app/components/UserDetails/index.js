@@ -14,6 +14,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar'
 import UserList from "../UserList/index";
+import {AddUserDialog} from "../AddUserDialog/index";
 
 
 export class UserDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -25,7 +26,6 @@ export class UserDetails extends React.Component { // eslint-disable-line react/
   }
 
   toggleExpansion() {
-    console.log(this.state)
     this.setState({
       expanded: !this.state.expanded
     })
@@ -41,7 +41,7 @@ export class UserDetails extends React.Component { // eslint-disable-line react/
       <div>
 
         <Card
-          // expanded={this.state.expanded} onExpandChange={this.toggleExpansion}
+          expanded={this.state.expanded} onExpandChange={this.toggleExpansion.bind(this)}
         >
           {/*<CardTitle title="Active User" subtitle="Manage current user"/>*/}
           <CardHeader
@@ -56,6 +56,9 @@ export class UserDetails extends React.Component { // eslint-disable-line react/
             <UserList users={this.props.users} setActiveUser={this.setUserAndClose.bind(this)}/>
 
           </CardText>
+          <CardActions>
+            <AddUserDialog doAddUser={this.props.doAddUser}/>
+          </CardActions>
         </Card>
       </div>
     );

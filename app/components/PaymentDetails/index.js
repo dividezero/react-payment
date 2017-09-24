@@ -25,7 +25,6 @@ export class PaymentDetails extends React.Component { // eslint-disable-line rea
   }
 
   toggleExpansion() {
-    console.log(this.state)
     this.setState({
       expanded: !this.state.expanded
     })

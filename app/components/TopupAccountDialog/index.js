@@ -30,7 +30,6 @@ export class TopupAccountDialog extends React.Component { // eslint-disable-line
   handleSubmit = () => {
     // if(typeof index === 'number'){
     // }
-    console.log(this.state.val_desc, this.state.val_amt, this.state.val_ccy);
     this.props.topupAccount(this.state.amount);
 
     this.setState({open: false});
@@ -55,7 +54,7 @@ export class TopupAccountDialog extends React.Component { // eslint-disable-line
 
     return (
       <div>
-        <FlatButton label="Topup Account" onClick={this.handleOpen}/>
+        <FlatButton label="Topup Account" primary={true} onClick={this.handleOpen}/>
         <Dialog
           title="Topup Account"
           actions={actions}
@@ -63,11 +62,12 @@ export class TopupAccountDialog extends React.Component { // eslint-disable-line
           open={this.state.open}
           onRequestClose={this.handleClose}
           contentStyle={{
-            width: "300px"
+            width: "320px"
           }}
         >
           <TextField
             floatingLabelText="Amount"
+            type={"number"}
             onChange={this.handleChangeAmount}
           />
         </Dialog>
