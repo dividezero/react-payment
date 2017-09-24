@@ -14,9 +14,11 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar'
 import UserList from "../UserList/index";
+import AccountList from "../AccountList/index";
+import {TopupAccountDialog} from "../TopupAccountDialog/index";
 
 
-export class UserDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class AccountDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props){
     super(props);
     this.state = {
@@ -31,8 +33,8 @@ export class UserDetails extends React.Component { // eslint-disable-line react/
     })
   }
 
-  setUserAndClose(user) {
-    this.props.setActiveUser(user);
+  setAccountAndClose(account) {
+    this.props.setActiveAccount(account);
     this.toggleExpansion();
   }
 
@@ -45,15 +47,20 @@ export class UserDetails extends React.Component { // eslint-disable-line react/
         >
           {/*<CardTitle title="Active User" subtitle="Manage current user"/>*/}
           <CardHeader
-            title={this.props.user.first_name + ' ' + this.props.user.last_name}
-            subtitle={this.props.user.email}
-            avatar={<Avatar>{this.props.user.initials}</Avatar>}
+            title={this.props.activeAccount.name}
+            subtitle={this.props.activeAccount.card_number}
             actAsExpander={true}
             showExpandableButton={true}
           />
+          <CardText>
+            <div>Balance: {this.props.activeAccount.balance}</div>
+          </CardText>
+          <CardActions>
+            <TopupAccountDialog topupAccount={this.props.topupAccount}/>
+          </CardActions>
           <CardText expandable={true}>
             {/*<UserList users={this.props.users}/>*/}
-            <UserList users={this.props.users} setActiveUser={this.setUserAndClose.bind(this)}/>
+            <AccountList accounts={this.props.accounts} setActiveAccount={this.setAccountAndClose.bind(this)}/>
 
           </CardText>
         </Card>
@@ -72,7 +79,7 @@ const style = {
   }
 };
 
-UserDetails.propTypes = {
+AccountDetails.propTypes = {
   user: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
@@ -88,4 +95,4 @@ const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(
   withConnect,
-)(UserDetails);
+)(AccountDetails);

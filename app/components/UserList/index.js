@@ -8,12 +8,15 @@ import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bu
 
 
 const UserList = (props) => {
-  const userItems = props.users.map((user)=>
+  const userItems = props.users.map((user, key)=>
     <ListItem
       primaryText={user.first_name+" "+user.last_name}
       secondaryText={user.email}
       leftAvatar={<Avatar>{user.initials}</Avatar>}
-      rightIcon={<CommunicationChatBubble/>}
+      key={key}
+      onClick={()=>{
+        props.setActiveUser(user);
+      }}
     />
   );
 

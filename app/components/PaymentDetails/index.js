@@ -1,6 +1,6 @@
 /**
  *
- * UserDetails
+ * PaymentDetails
  *
  */
 
@@ -12,11 +12,11 @@ import {Helmet} from 'react-helmet';
 import {compose} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import Avatar from 'material-ui/Avatar'
-import UserList from "../UserList/index";
+import PaymentList from "../PaymentList/index";
+import {MakePaymentDialog} from "../MakePaymentDialog/index";
 
 
-export class UserDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export class PaymentDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props){
     super(props);
     this.state = {
@@ -31,8 +31,8 @@ export class UserDetails extends React.Component { // eslint-disable-line react/
     })
   }
 
-  setUserAndClose(user) {
-    this.props.setActiveUser(user);
+  setAccountAndClose(account) {
+    this.props.setActiveAccount(account);
     this.toggleExpansion();
   }
 
@@ -43,17 +43,14 @@ export class UserDetails extends React.Component { // eslint-disable-line react/
         <Card
           // expanded={this.state.expanded} onExpandChange={this.toggleExpansion}
         >
-          {/*<CardTitle title="Active User" subtitle="Manage current user"/>*/}
-          <CardHeader
-            title={this.props.user.first_name + ' ' + this.props.user.last_name}
-            subtitle={this.props.user.email}
-            avatar={<Avatar>{this.props.user.initials}</Avatar>}
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
-          <CardText expandable={true}>
+          <CardTitle title="Account Payments" subtitle="Manage account payments here"/>
+
+          <CardActions>
+            <MakePaymentDialog makePayment={this.props.makePayment}/>
+          </CardActions>
+          <CardText>
             {/*<UserList users={this.props.users}/>*/}
-            <UserList users={this.props.users} setActiveUser={this.setUserAndClose.bind(this)}/>
+            <PaymentList payments={this.props.payments} />
 
           </CardText>
         </Card>
@@ -72,8 +69,8 @@ const style = {
   }
 };
 
-UserDetails.propTypes = {
-  user: PropTypes.object.isRequired,
+PaymentDetails.propTypes = {
+  payments: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -88,4 +85,4 @@ const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(
   withConnect,
-)(UserDetails);
+)(PaymentDetails);
