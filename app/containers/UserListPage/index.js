@@ -12,6 +12,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import UserList from '../../components/UserList';
 
 const userList = [{
   name: "James Dean",
@@ -21,13 +22,11 @@ const userList = [{
   initials: "CS"
 }];
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export default class UserListPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
-        <h1>
-          <FormattedMessage {...messages.header} />
-        </h1>
+        <UserList users={userList}/>
       </div>
     );
   }

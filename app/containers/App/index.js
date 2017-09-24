@@ -12,18 +12,31 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import UserListPage from "../UserListPage/index";
+import Dashboard from "../Dashboard/index";
+
 export default function App() {
   return (
-    <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-    </div>
+    <MuiThemeProvider>
+      <div>
+        <AppBar
+          title="Payment App"
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+        />
+        <Switch>
+          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/users" component={UserListPage}/>
+          <Route exact path="/me" component={Dashboard}/>
+          <Route component={NotFoundPage}/>
+        </Switch>
+      </div>
+    </MuiThemeProvider>
   );
 }
