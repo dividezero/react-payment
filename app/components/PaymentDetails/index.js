@@ -13,11 +13,11 @@ import {compose} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import PaymentList from "../PaymentList/index";
-import {MakePaymentDialog} from "../MakePaymentDialog/index";
+import {MakePaymentDialog} from "../../containers/MakePaymentDialog/index";
 
 
 export class PaymentDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       expanded: false
@@ -30,29 +30,28 @@ export class PaymentDetails extends React.Component { // eslint-disable-line rea
     })
   }
 
-  setAccountAndClose(account) {
-    this.props.setActiveAccount(account);
-    this.toggleExpansion();
-  }
-
   render() {
     return (
       <div>
+        {(this.props.payments && this.props.payments.length > 0) ?
 
-        <Card
-          // expanded={this.state.expanded} onExpandChange={this.toggleExpansion}
-        >
-          <CardTitle title="Account Payments" subtitle="Manage account payments here"/>
-
-          <CardActions>
-            <MakePaymentDialog makePayment={this.props.makePayment}/>
-          </CardActions>
-          <CardText>
-            {/*<UserList users={this.props.users}/>*/}
-            <PaymentList payments={this.props.payments} />
-
-          </CardText>
-        </Card>
+          <Card>
+            <CardTitle title="Account Payments" subtitle="Manage account payments here"/>
+            <CardActions>
+              <MakePaymentDialog makePayment={this.props.makePayment}/>
+            </CardActions>
+            <CardText>
+              <PaymentList payments={this.props.payments}/>
+            </CardText>
+          </Card>
+          :
+          <Card>
+            <CardTitle title="Account Payments" subtitle="Manage account payments here"/>
+            <CardText>
+              <div>No payments here</div>
+            </CardText>
+          </Card>
+        }
       </div>
     );
   }

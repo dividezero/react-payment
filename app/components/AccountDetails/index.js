@@ -5,17 +5,13 @@
  */
 
 import React from 'react';
-import StyleSheet from 'react/';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Helmet} from 'react-helmet';
 import {compose} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Avatar from 'material-ui/Avatar'
-import UserList from "../UserList/index";
 import AccountList from "../AccountList/index";
-import {TopupAccountDialog} from "../TopupAccountDialog/index";
+import {TopupAccountDialog} from "../../containers/TopupAccountDialog/index";
 
 
 export class AccountDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -40,30 +36,39 @@ export class AccountDetails extends React.Component { // eslint-disable-line rea
   render() {
     return (
       <div>
+        {this.props.activeAccount?
+          <Card
+            expanded={this.state.expanded} onExpandChange={this.toggleExpansion.bind(this)}
+          >
 
-        <Card
-          expanded={this.state.expanded} onExpandChange={this.toggleExpansion.bind(this)}
-        >
-          {/*<CardTitle title="Active User" subtitle="Manage current user"/>*/}
-          <CardHeader
-            title={this.props.activeAccount.name}
-            subtitle={this.props.activeAccount.card_number}
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
-          <CardText expandable={true}>
-            {/*<UserList users={this.props.users}/>*/}
-            <AccountList accounts={this.props.accounts} setActiveAccount={this.setAccountAndClose.bind(this)}/>
+            <CardHeader
+              title={this.props.activeAccount.name}
+              subtitle={this.props.activeAccount.card_number}
+              actAsExpander={true}
+              showExpandableButton={true}
+            />
+            <CardText expandable={true}>
+              <AccountList accounts={this.props.accounts} setActiveAccount={this.setAccountAndClose.bind(this)}/>
 
-          </CardText>
-          <CardText>
-            <div>Balance: {this.props.activeAccount.balance}</div>
-          </CardText>
-          <CardActions>
-            <TopupAccountDialog topupAccount={this.props.topupAccount}/>
-          </CardActions>
+            </CardText>
+            <CardText>
+              <div>Balance: {this.props.activeAccount.balance}</div>
+            </CardText>
+            <CardActions>
+              <TopupAccountDialog topupAccount={this.props.topupAccount}/>
+            </CardActions>
 
-        </Card>
+          </Card>
+        :
+          <Card
+            expanded={this.state.expanded} onExpandChange={this.toggleExpansion.bind(this)}
+          >
+            <CardHeader
+              title="No Account Found"
+              subtitle="There desnt seem to be an account attached to this user"
+            />
+          </Card>}
+
       </div>
     );
   }
@@ -80,7 +85,6 @@ const style = {
 };
 
 AccountDetails.propTypes = {
-  user: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

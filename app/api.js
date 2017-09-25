@@ -1,7 +1,6 @@
 export function doPost(url, obj, callback) {
-  fetch("http://neat-mvp-api.herokuapp.com/" + url, {
+  fetch("http://localhost/" + url, {
     method: 'POST',
-    mode: 'cors',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -19,16 +18,14 @@ export function doPost(url, obj, callback) {
 }
 
 export function doGet(url, callback) {
-  fetch("http://neat-mvp-api.herokuapp.com/" + url, {
+  fetch("http://localhost/" + url, {
     method: 'GET',
-    mode: 'cors',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   }).then(function (data) {
     // Here you get the data to modify as you please
-    console.info(data)
     callback(data)
     return data;
   }).catch(function (error) {
@@ -94,27 +91,3 @@ export function postTopupAccount(account_id, amount, callback) {
   }, callback);
 }
 
-
-export function createCORSRequest(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-
-    // Check if the XMLHttpRequest object has a "withCredentials" property.
-    // "withCredentials" only exists on XMLHTTPRequest2 objects.
-    xhr.open(method, url, true);
-
-  } else if (typeof XDomainRequest != "undefined") {
-
-    // Otherwise, check if XDomainRequest.
-    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-
-  } else {
-
-    // Otherwise, CORS is not supported by the browser.
-    xhr = null;
-
-  }
-  return xhr;
-}

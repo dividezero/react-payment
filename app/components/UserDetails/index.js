@@ -14,7 +14,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar'
 import UserList from "../UserList/index";
-import {AddUserDialog} from "../AddUserDialog/index";
+import {AddUserDialog} from "../../containers/AddUserDialog/index";
 
 
 export class UserDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function

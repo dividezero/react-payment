@@ -15,8 +15,11 @@ const PaymentList = (props) => {
   const userItems = props.payments.map((payment, key) =>
     <TableRow key={key}>
       <TableRowColumn>{payment.merchant_name}</TableRowColumn>
+      <TableRowColumn>{payment.category}</TableRowColumn>
       <TableRowColumn>{payment.description}</TableRowColumn>
-      <TableRowColumn>{payment.amount + payment.currency}</TableRowColumn>
+      <TableRowColumn>{payment.amount}</TableRowColumn>
+      <TableRowColumn>{payment.currency}</TableRowColumn>
+      <TableRowColumn>{payment.status}</TableRowColumn>
     </TableRow>
   );
 
@@ -25,11 +28,14 @@ const PaymentList = (props) => {
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow>
           <TableHeaderColumn>Merchant</TableHeaderColumn>
+          <TableHeaderColumn>Category</TableHeaderColumn>
           <TableHeaderColumn>Description</TableHeaderColumn>
           <TableHeaderColumn>Amount</TableHeaderColumn>
+          <TableHeaderColumn>Currency</TableHeaderColumn>
+          <TableHeaderColumn>Status</TableHeaderColumn>
         </TableRow>
       </TableHeader>
-      <TableBody displayRowCheckbox={false}>
+      <TableBody displayRowCheckbox={false} showRowHover={true}>
         {userItems}
       </TableBody>
     </Table>

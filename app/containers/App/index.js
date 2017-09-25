@@ -17,7 +17,7 @@ import {Switch, Route} from 'react-router-dom';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Dashboard from "../Dashboard/index";
+import Dashboard from "../../components/Dashboard/index";
 
 export default function App() {
   return (

@@ -10,23 +10,19 @@
  */
 
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
-import messages from './messages';
 import AppBar from 'material-ui/AppBar';
-import {AccountDetails} from "../../components/AccountDetails";
-import {PaymentDetails} from "../../components/PaymentDetails";
-import {UserDetails} from "../../components/UserDetails/index";
-import {MakePaymentDialog} from "../../components/MakePaymentDialog/index";
+import {AccountDetails} from "../AccountDetails/index";
+import {PaymentDetails} from "../PaymentDetails/index";
+import {UserDetails} from "../UserDetails/index";
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {Link} from 'react-router-dom';
 import {
   authenticateUser, getAccount, getAccountPayments, getAllUsers, getUser, getUserAccounts, postCreateUser,
   postTopupAccount
 } from '../../api';
-import {LoginPage} from "../../components/LoginPage/index";
+import {LoginPage} from "../LoginPage/index";
 import {loggedUser, activeUser, users, demo_payments, demo_accounts} from "../../tests/sampleData";
 
 
@@ -71,7 +67,6 @@ export default class Dashboard extends React.PureComponent { // eslint-disable-l
   populateUsers = (resetActive = true) => {
     this.resetUsers();
     getAllUsers((resUsers) => {
-      console.log(resUsers)
       if(resUsers){
         this.setState({
           users: resUsers,
@@ -88,6 +83,7 @@ export default class Dashboard extends React.PureComponent { // eslint-disable-l
   };
 
   populateAccounts = (resetActive = true) => {
+    this.resetAccounts();
     getUserAccounts(this.state.activeUser.id, (accs) => {
       if (accs) {
         this.setState({
@@ -190,6 +186,7 @@ export default class Dashboard extends React.PureComponent { // eslint-disable-l
                 title="Payment App"
                 iconElementLeft={<div></div>}
                 iconElementRight={<Logged
+                  loggedUser={this.state.loggedUser}
                   doRefresh={this.doRefresh.bind(this)}
                   doLogOut={this.doLogOut.bind(this)}/>}
               />
